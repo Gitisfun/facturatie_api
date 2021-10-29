@@ -1,0 +1,43 @@
+// TABLE NAME AND COLUMNS
+
+const TABLE_NAME = "betalingstermijnen";
+
+const COLUMN_ID = "id"
+const COLUMN_NAAM = "naam"
+const COLUMN_TERMIJN = "termijn"
+const COLUMN_IS_ACTIVE = "isActive"
+const COLUMN_UPDATED_TIME = "updated_time"
+const COLUMN_UPDATED_BY = "updated_by"
+const COLUMN_BEDRIJF_ID = "bedrijfs_id"
+
+
+const TABLE_JOIN_GEBRUIKER = "gebruikers"
+
+const COLUMN_GEBR_ID = "id"
+const COLUMN_GEBR_VOORNAAM = "voornaam"
+const COLUMN_GEBR_ACHTERNAAM = "achternaam"
+
+const ALIAS_GEBR_ID = "updated_by"
+const ALIAS_GEBR_VOORNAAM = "updated_by_voornaam"
+const ALIAS_GEBR_ACHTERNAAM = "updated_by_achternaam"
+
+// QUERIES
+
+function QUERY_GET_ALL(){
+    const QUERY = `SELECT ${TABLE_NAME}.${COLUMN_ID}, ${TABLE_NAME}.${COLUMN_NAAM}, ${TABLE_NAME}.${COLUMN_TERMIJN}, ${TABLE_NAME}.${COLUMN_UPDATED_TIME}, `
+    const QUERY_JOIN = `${TABLE_JOIN_GEBRUIKER}.${COLUMN_GEBR_ID} "${ALIAS_GEBR_ID}", ${TABLE_JOIN_GEBRUIKER}.${COLUMN_GEBR_VOORNAAM} "${ALIAS_GEBR_VOORNAAM}", ${TABLE_JOIN_GEBRUIKER}.${COLUMN_GEBR_ACHTERNAAM} "${ALIAS_GEBR_ACHTERNAAM}" FROM ${TABLE_NAME} `
+    const JOIN = `INNER JOIN ${TABLE_JOIN_GEBRUIKER} ON ${TABLE_NAME}.${COLUMN_UPDATED_BY} = ${TABLE_JOIN_GEBRUIKER}.${COLUMN_GEBR_ID} `;
+    const WHERE = `WHERE ${TABLE_NAME}.${COLUMN_IS_ACTIVE} = 1 AND ${TABLE_NAME}.${COLUMN_BEDRIJF_ID} = ? `;
+    const ORDER = `ORDER BY ${TABLE_NAME}.${COLUMN_TERMIJN} ASC`;
+    return QUERY + QUERY_JOIN + JOIN + WHERE + ORDER
+}
+
+function QUERY_GET() {}
+
+function QUERY_CREATE() {}
+  
+function QUERY_UPDATE() {}
+  
+function QUERY_DELETE() {}
+
+export { QUERY_GET, QUERY_GET_ALL, QUERY_CREATE, QUERY_UPDATE , QUERY_DELETE };

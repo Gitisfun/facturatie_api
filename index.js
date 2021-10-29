@@ -5,6 +5,9 @@ import ApiError from "./errors/ApiError.js";
 import errorHandler from "./errors/ErrorHandler.js";
 
 import gebruikersRoute from "./routes/gebruikers.js"
+import btwRoute from "./routes/btw.js"
+import betalingstermijnenRoute from "./routes/betalingstermijnen.js"
+import leveranciersRoute from "./routes/leveranciers.js"
 
 const app = Express();
 const server = http.createServer(app);
@@ -20,6 +23,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/gebruikers/", gebruikersRoute);
+app.use("/api/btw/", btwRoute);
+app.use("/api/betalingstermijnen/", betalingstermijnenRoute);
+app.use("/api/leveranciers/", leveranciersRoute);
 
 app.use((req, res, next) => {
   next(ApiError.notFound("Route not found"));

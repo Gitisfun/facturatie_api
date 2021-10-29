@@ -40,4 +40,5 @@ router.delete("/:id", (req, res, next) => {
   queryHandler(QUERY_DELETE, paramList, res, next);
 });
 
+
 export default router;

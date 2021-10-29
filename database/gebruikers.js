@@ -15,9 +15,12 @@ const COLUMN_ROL = "rol";
 const COLUMN_IS_ACTIVE = "isActive";
 const COLUMN_BEDRIJF_ID = "bedrijf_id";
 
+
 const TABLE_JOIN_BEDRIJVEN = "bedrijven";
+
 const COLUMN_BED_ID = "id";
 const COLUMN_BED_NAME = "naam";
+
 const ALIAS_BED_ID = "bedrijf_id";
 const ALIAS_BED_NAME = "bedrijf_naam";
 
