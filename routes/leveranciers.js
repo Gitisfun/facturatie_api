@@ -16,23 +16,28 @@ router.get("/:id", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-    console.log(req.body);
-    const paramList = [req.body.leveranciers_nr, req.body.naam, req.body.extra_naam, req.body.telefoon, req.body.email, req.body.btw_id, req.body.btw_nr, req.body.handelregister_nr, req.body.onderneming_type, req.body.taal, req.body.type, req.body.betalingstermijn_id, req.body.adressen, req.body.updated_by, req.body.bedrijfs_id];
+    // TODO: Replace with user id
+    // TODO: Replace with comppany id
+    const paramList = [req.body.leveranciers_nr, req.body.naam, req.body.extra_naam, req.body.telefoon, req.body.email, req.body.btw_id, req.body.btw_nr, req.body.handelregister_nr, req.body.onderneming_type, req.body.taal, req.body.type, req.body.betalingstermijn_id, req.body.adressen, 1, 1];
     queryHandler(QUERY_CREATE, paramList, res, next);
 });
   
 router.put("/:id", (req, res, next) => {
-    const paramList = [req.body.leveranciers_nr, req.body.naam, req.body.extra_naam, req.body.telefoon, req.body.email, req.body.btw_id, req.body.btw_nr, req.body.handelregister_nr, req.body.onderneming_type, req.body.taal, req.body.type, req.body.betalingstermijn_id, req.body.adressen, req.body.updated_by, req.body.bedrijfs_id, req.params.id];
+    // TODO: Replace with user id
+    // TODO: Replace with comppany id
+    const paramList = [req.body.leveranciers_nr, req.body.naam, req.body.extra_naam, req.body.telefoon, req.body.email, req.body.btw_id, req.body.btw_nr, req.body.handelregister_nr, req.body.onderneming_type, req.body.taal, req.body.type, req.body.betalingstermijn_id, req.body.adressen, 2, 1, req.params.id];
     queryHandler(QUERY_UPDATE, paramList, res, next);
 });
   
 router.delete("/:id", (req, res, next) => {
-    const paramList = [req.params.id];
+    // TODO: Replace with user id
+    const paramList = [1, req.params.id];
     queryHandler(QUERY_DELETE, paramList, res, next);
 });
 
 router.put("/esp/:id", (req, res, next) => {
-    const paramList = [req.body.isBlacklisted, req.params.id];
+    // TODO: Replace with user id
+    const paramList = [req.body.isBlacklisted, 1, req.params.id];
     queryHandler(QUERY_ESP, paramList, res, next);
 });
 
