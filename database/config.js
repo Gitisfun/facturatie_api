@@ -24,6 +24,7 @@ const config = {
   supportBigNumbers: true,
   bigNumberStrings: true,
   timezone: "utc+2",
+  // dateStrings: true
 };
 
 
