@@ -23,7 +23,7 @@ const config = {
   queueLimit: 0,
   supportBigNumbers: true,
   bigNumberStrings: true,
-  timezone: "utc+2",
+  timezone: "utc+1",
   // dateStrings: true
 };
 
