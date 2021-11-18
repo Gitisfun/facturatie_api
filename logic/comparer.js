@@ -3,7 +3,8 @@ import jwt from "jsonwebtoken";
 import responseHandler from "../response/responseHandler.js";
 
 export default function comparer(user, foundUser, response, next) {
-  const ONE_WEEK = 60 * 60 * 24 * 7;
+  //const ONE_WEEK = 60 * 60 * 24 * 7;
+  const TEN_SECONDS = 10;
   let msg = {};
 
   bcrypt.compare(user.wachtwoord, foundUser.wachtwoord, (err, result) => {
@@ -15,8 +16,9 @@ export default function comparer(user, foundUser, response, next) {
         status: false,
       };
     } else {
+      // TODO: Add secret key here
       const token = jwt.sign({ foundUser }, "process.env.SECRET_KEY", {
-        expiresIn: ONE_WEEK,
+        expiresIn: TEN_SECONDS,
       });
       const temp = jwt.decode(token);
       msg = {
