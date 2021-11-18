@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.get("/", authenticator, (req, res, next) => {
     // TODO: bedrijfs_id --> 1
+    console.log(req.bedrijf_id);
+    console.log(req.user_id);
     const paramList = [1];
     const temp = Pagination.validateData(req.query, ["leveranciers.leveranciers_nr", "leveranciers.naam"])
     paramList.push(temp.searchField)

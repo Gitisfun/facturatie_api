@@ -11,8 +11,8 @@ export default function (req, res, next) {
       if (err) {
         res.sendStatus(403);
       } else {
-        req.user = user;
-        console.log(user)
+        req.bedrijf_id = user.foundUser.bedrijf_id;
+        req.user_id = user.foundUser.id;
         next();
       }
     });
