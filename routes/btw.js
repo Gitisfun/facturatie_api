@@ -6,8 +6,7 @@ import authenticator from "../middleware/authenticator.js"
 const router = express.Router();
 
 router.get("/", authenticator, (req, res, next) => {
-  // TODO: Bedrijfs_id from token
-  const paramList = [1];
+  const paramList = [req.bedrijf_id];
   queryHandler(QUERY_GET_ALL, paramList, res, next);
 });
 
