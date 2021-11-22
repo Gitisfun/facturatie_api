@@ -11,7 +11,7 @@ import gebruikersRoute from "./routes/gebruikers.js"
 import btwRoute from "./routes/btw.js"
 import betalingstermijnenRoute from "./routes/betalingstermijnen.js"
 import leveranciersRoute from "./routes/leveranciers.js"
-
+import klantenRoute from "./routes/klanten.js"
 
 const app = Express();
 const server = http.createServer(app);
@@ -41,6 +41,10 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("leveranciers", "Your response from the server is here!!")
   })
 
+  socket.on("klanten", () => {
+    socket.broadcast.emit("klanten", "Your response from the server is here!!")
+  })
+
   socket.on("disconnect", () => {
     console.log(chalk.red("A socket has disconnected..."));
   });
@@ -54,6 +58,7 @@ app.use("/api/gebruikers/", gebruikersRoute);
 app.use("/api/btw/", btwRoute);
 app.use("/api/betalingstermijnen/", betalingstermijnenRoute);
 app.use("/api/leveranciers/", leveranciersRoute);
+app.use("/api/klanten/", klantenRoute);
 
 app.use((req, res, next) => {
   next(ApiError.notFound("Route not found"));
