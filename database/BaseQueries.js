@@ -1,3 +1,5 @@
+import QueryString from "./QueryStrings.js"
+
 class BaseQueries {
 
     static create(table_name, columns) {
@@ -35,6 +37,17 @@ class BaseQueries {
     static esp(table_name){
         return `UPDATE ${table_name} SET isBlacklisted = ?, updated_time = NOW(), updated_by = ? WHERE id = ?` 
     }
+
+    static stock(table_name){
+        return `UPDATE ${table_name} SET inStock = ?, updated_time = NOW(), updated_by = ? WHERE id = ?` 
+    }
+
+    static count(table_name, fields) {
+        const QUERY = `SELECT COUNT(*) AS 'total' FROM ${table_name} `
+        const WHERE = `WHERE ${table_name}.isActive = 1 AND ${table_name}.bedrijfs_id = ? `
+        return QUERY + WHERE + QueryString.filtering(fields)
+    }
+
 }
 
 export default BaseQueries
