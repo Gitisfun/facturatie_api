@@ -21,7 +21,6 @@ router.get("/:id", authenticator, (req, res, next) => {
 });
 
 router.post("/", authenticator, (req, res, next) => {
-    console.log(req.body);
     const paramList = [req.body.artikelcode, req.body.naam, req.body.prijs, req.body.omschrijving, req.body.leverancier_id, req.body.verkoopeenheid, req.body.ean, req.body.memo, req.body.valuta, req.body.netto, req.body.kosten, req.body.marge, req.body.inStock, req.user_id, req.bedrijf_id];
     queryHandler(QUERY_CREATE, paramList, res, next);
 });
@@ -38,7 +37,6 @@ router.delete("/:id", authenticator, (req, res, next) => {
 
 router.put("/stock/:id", authenticator, (req, res, next) => {
     const paramList = [req.body.inStock, req.user_id, req.params.id];
-    console.log(paramList);
     queryHandler(QUERY_STOCK, paramList, res, next);
 });
 
