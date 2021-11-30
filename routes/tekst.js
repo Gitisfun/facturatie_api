@@ -1,5 +1,5 @@
 import express from "express";
-import { QUERY_GET, QUERY_GET_ALL, QUERY_CREATE, QUERY_UPDATE, QUERY_DELETE } from "../database/btw.js";
+import { QUERY_GET, QUERY_GET_ALL, QUERY_CREATE, QUERY_UPDATE, QUERY_DELETE } from "../database/tekst.js";
 import queryHandler from "../query/queryHandler.js";
 import authenticator from "../middleware/authenticator.js"
 
@@ -16,12 +16,13 @@ router.get("/:id", authenticator, (req, res, next) => {
 });
 
 router.post("/", authenticator, (req, res, next) => {
-  const paramList = [req.body.naam, req.body.prijs, req.user_id, req.bedrijf_id];
+  console.log(req.body);
+  const paramList = [req.body.tekst, req.body.type, req.user_id, req.bedrijf_id];
   queryHandler(QUERY_CREATE, paramList, res, next);
 });
 
 router.put("/:id", authenticator, (req, res, next) => {
-  const paramList = [req.body.naam, req.body.prijs, req.user_id, req.bedrijf_id, req.params.id];
+  const paramList = [req.body.tekst, req.body.type, req.user_id, req.bedrijf_id, req.params.id];
   queryHandler(QUERY_UPDATE, paramList, res, next);
 });
 

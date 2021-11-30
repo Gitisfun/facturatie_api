@@ -10,5 +10,25 @@ router.get("/", authenticator, (req, res, next) => {
   queryHandler(QUERY_GET_ALL, paramList, res, next);
 });
 
+router.get("/:id", authenticator, (req, res, next) => {
+  const paramList = [req.params.id];
+  queryHandler(QUERY_GET, paramList, res, next);
+});
+
+router.post("/", authenticator, (req, res, next) => {
+  const paramList = [req.body.naam, req.body.termijn, req.user_id, req.bedrijf_id];
+  queryHandler(QUERY_CREATE, paramList, res, next);
+});
+
+router.put("/:id", authenticator, (req, res, next) => {
+  const paramList = [req.body.naam, req.body.termijn, req.user_id, req.bedrijf_id, req.params.id];
+  queryHandler(QUERY_UPDATE, paramList, res, next);
+});
+
+router.delete("/:id", authenticator, (req, res, next) => {
+  const paramList = [req.user_id, req.params.id];
+  queryHandler(QUERY_DELETE, paramList, res, next);
+});
+
 
 export default router;

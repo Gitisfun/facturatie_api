@@ -13,6 +13,7 @@ import betalingstermijnenRoute from "./routes/betalingstermijnen.js"
 import leveranciersRoute from "./routes/leveranciers.js"
 import klantenRoute from "./routes/klanten.js"
 import artikelenRoute from "./routes/artikels.js"
+import tekstRoute from "./routes/tekst.js"
 
 const app = Express();
 const server = http.createServer(app);
@@ -50,6 +51,12 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("artikels", "Your response from the server is here!!")
   })
 
+  socket.on("andere", () => {
+    // To use and to everyone else connected
+    socket.emit("andere", "Your response from the server is here!!")
+    socket.broadcast.emit("andere", "Your response from the server is here!!")
+  })
+
   socket.on("disconnect", () => {
     console.log(chalk.red("A socket has disconnected..."));
   });
@@ -62,6 +69,7 @@ app.get("/", (req, res) => {
 app.use("/api/gebruikers/", gebruikersRoute);
 app.use("/api/btw/", btwRoute);
 app.use("/api/betalingstermijnen/", betalingstermijnenRoute);
+app.use("/api/tekst/", tekstRoute);
 app.use("/api/leveranciers/", leveranciersRoute);
 app.use("/api/klanten/", klantenRoute);
 app.use("/api/artikels/", artikelenRoute);
