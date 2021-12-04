@@ -42,6 +42,15 @@ class BaseQueries {
         return `UPDATE ${table_name} SET inStock = ?, updated_time = NOW(), updated_by = ? WHERE id = ?` 
     }
 
+    static delivered(table_name){
+        return `UPDATE ${table_name} SET isGeleverd = ?, updated_time = NOW(), updated_by = ? WHERE id = ?` 
+    }
+
+    static paid(table_name){
+        return `UPDATE ${table_name} SET isBetaald = ?, updated_time = NOW(), updated_by = ? WHERE id = ?` 
+    }
+
+
     static count(table_name, fields) {
         const QUERY = `SELECT COUNT(*) AS 'total' FROM ${table_name} `
         const WHERE = `WHERE ${table_name}.isActive = 1 AND ${table_name}.bedrijfs_id = ? `
