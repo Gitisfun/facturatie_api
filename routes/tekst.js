@@ -16,7 +16,6 @@ router.get("/:id", authenticator, (req, res, next) => {
 });
 
 router.post("/", authenticator, (req, res, next) => {
-  console.log(req.body);
   const paramList = [req.body.tekst, req.body.type, req.user_id, req.bedrijf_id];
   queryHandler(QUERY_CREATE, paramList, res, next);
 });
