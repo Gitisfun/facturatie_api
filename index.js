@@ -8,6 +8,7 @@ import chalk from "chalk" // TODO: remove chalk
 
 // Routes
 import aankopenRoute from "./routes/aankopen.js"
+import verkopenRoute from "./routes/verkopen.js"
 import gebruikersRoute from "./routes/gebruikers.js"
 import btwRoute from "./routes/btw.js"
 import betalingstermijnenRoute from "./routes/betalingstermijnen.js"
@@ -42,6 +43,10 @@ io.on("connection", (socket) => {
   
   socket.on("aankopen", () => {
     socket.broadcast.emit("aankopen", "Your response from the server is here!!")
+  })
+
+  socket.on("verkopen", () => {
+    socket.broadcast.emit("verkopen", "Your response from the server is here!!")
   })
 
   socket.on("leveranciers", () => {
@@ -79,6 +84,7 @@ app.use("/api/leveranciers/", leveranciersRoute);
 app.use("/api/klanten/", klantenRoute);
 app.use("/api/artikels/", artikelenRoute);
 app.use("/api/aankopen/", aankopenRoute);
+app.use("/api/verkopen/", verkopenRoute)
 
 app.use((req, res, next) => {
   next(ApiError.notFound("Route not found"));
