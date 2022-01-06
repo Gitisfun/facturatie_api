@@ -9,6 +9,7 @@ import chalk from "chalk" // TODO: remove chalk
 // Routes
 import aankopenRoute from "./routes/aankopen.js"
 import verkopenRoute from "./routes/verkopen.js"
+import creditnotasRoute from "./routes/creditnotas.js"
 import gebruikersRoute from "./routes/gebruikers.js"
 import btwRoute from "./routes/btw.js"
 import betalingstermijnenRoute from "./routes/betalingstermijnen.js"
@@ -84,7 +85,8 @@ app.use("/api/leveranciers/", leveranciersRoute);
 app.use("/api/klanten/", klantenRoute);
 app.use("/api/artikels/", artikelenRoute);
 app.use("/api/aankopen/", aankopenRoute);
-app.use("/api/verkopen/", verkopenRoute)
+app.use("/api/verkopen/", verkopenRoute);
+app.use("/api/creditnotasRoute/", creditnotasRoute);
 
 app.use((req, res, next) => {
   next(ApiError.notFound("Route not found"));
