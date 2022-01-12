@@ -34,6 +34,22 @@ class BaseQueries {
         return `UPDATE ${table_name} SET isActive = 0, updated_time = NOW(), updated_by = ? WHERE id = ?` 
     }
 
+    static deleteArtikels(table_name, column_name) {
+        return `DELETE FROM ${table_name} WHERE ${column_name} = ?`
+    }
+
+    static insertAll(table_name, columns){
+        let QUERY = `INSERT INTO ${table_name} (`
+        for(let i = 0; i < columns.length; i++){
+            QUERY += `${columns[i]}`
+            if(i < (columns.length - 1)){
+                QUERY += ", "
+            }        
+        }
+        QUERY += ") VALUES (?)"
+        return QUERY;
+    }
+
     static esp(table_name){
         return `UPDATE ${table_name} SET isBlacklisted = ?, updated_time = NOW(), updated_by = ? WHERE id = ?` 
     }

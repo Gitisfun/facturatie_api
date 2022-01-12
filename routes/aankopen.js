@@ -3,6 +3,7 @@ import { QUERY_GET, QUERY_GET_ALL, QUERY_COUNT, QUERY_CREATE, QUERY_UPDATE, QUER
 import queryHandler from "../query/queryHandler.js";
 import authenticator from "../middleware/authenticator.js"
 import Pagination from "../logic/pagination.js"
+import MultipleController from "../query/multipleController.js";
 
 const router = express.Router();
 
@@ -16,14 +17,20 @@ router.get("/", authenticator, (req, res, next) => {
 });
 
 router.get("/:id", authenticator, (req, res, next) => {
+    /*
     const paramList = [req.params.id];
     queryHandler(QUERY_GET, paramList, res, next);
+    */
+   MultipleController.getAankoop(req.params.id, res, next)
 });
 
 router.post("/", authenticator, (req, res, next) => {
+    /*
     req.body.bestellings_nr = "1"
     const paramList = [req.body.bestellings_nr, req.body.datum, req.body.klant_id, req.body.ref_nr, req.body.btw_id, req.body.vervaldag, req.body.leverdatum, req.body.leverancier_id, req.body.incoterm, req.body.valuta, req.body.begintekst, req.body.eindtekst, req.body.factuuradres, req.body.leveradres, req.body.subtotaal, req.body.totaal, req.body.artikels, req.body.opmerking, req.user_id, req.bedrijf_id];
     queryHandler(QUERY_CREATE, paramList, res, next);
+    */
+   MultipleController.createAankoop(req, res, next)
 });
   
 router.put("/:id", authenticator, (req, res, next) => {

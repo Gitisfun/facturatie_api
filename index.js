@@ -18,6 +18,8 @@ import klantenRoute from "./routes/klanten.js"
 import artikelenRoute from "./routes/artikels.js"
 import tekstRoute from "./routes/tekst.js"
 import bedrijvenRoute from "./routes/bedrijven.js"
+import countersRoute from "./routes/counters.js"
+import testRoute from "./routes/test.js"
 
 const app = Express();
 const server = http.createServer(app);
@@ -73,6 +75,12 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("andere", "Your response from the server is here!!")
   })
 
+  socket.on("instellingen", () => {
+    // To use and to everyone else connected
+    socket.emit("instellingen", "Your response from the server is here!!")
+    socket.broadcast.emit("instellingen", "Your response from the server is here!!")
+  })
+
   socket.on("disconnect", () => {
     console.log(chalk.red("A socket has disconnected..."));
   });
@@ -93,6 +101,8 @@ app.use("/api/aankopen/", aankopenRoute);
 app.use("/api/verkopen/", verkopenRoute);
 app.use("/api/creditnotas/", creditnotasRoute);
 app.use("/api/bedrijven/", bedrijvenRoute);
+app.use("/api/counters/", countersRoute);
+app.use("/api/test/", testRoute)
 
 app.use((req, res, next) => {
   next(ApiError.notFound("Route not found"));
