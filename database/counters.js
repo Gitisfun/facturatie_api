@@ -1,3 +1,4 @@
+import TableStates from "../logic/constants.js";
 import BaseQueries from "./BaseQueries.js";
 
 // TABLE NAME AND COLUMNS
@@ -24,5 +25,18 @@ function QUERY_UPDATE() {
     const COLUMNS = [COLUMN_AANKOPEN, COLUMN_VERKOPEN, COLUMN_CREDITNOTA]
     return BaseQueries.update(TABLE_NAME, COLUMNS)
 }
+
+function QUERY_INCREMENT(table){
+    switch(table){
+        case TableStates.AANKOPEN:
+            return `UPDATE ${TABLE_NAME} SET ${COLUMN_AANKOPEN} = ${COLUMN_AANKOPEN} + 1`
+        case TableStates.VERKOPEN:
+            return `UPDATE ${TABLE_NAME} SET ${COLUMN_VERKOPEN} = ${COLUMN_VERKOPEN} + 1`
+        case TableStates.CREDITNOTAS:
+            return `UPDATE ${TABLE_NAME} SET ${COLUMN_CREDITNOTA} = ${COLUMN_CREDITNOTA} + 1`
+        default:
+            return ""
+    }
+}
   
-export { QUERY_GET, QUERY_UPDATE };
+export { QUERY_GET, QUERY_UPDATE, QUERY_INCREMENT };

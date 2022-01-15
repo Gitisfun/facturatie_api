@@ -35,7 +35,7 @@ class BaseQueries {
     }
 
     static deleteArtikels(table_name, column_name) {
-        return `DELETE FROM ${table_name} WHERE ${column_name} = ?`
+        return `UPDATE ${table_name} SET isActive = 2 WHERE ${column_name} = ?`
     }
 
     static insertAll(table_name, columns){
@@ -46,7 +46,7 @@ class BaseQueries {
                 QUERY += ", "
             }        
         }
-        QUERY += ") VALUES (?)"
+        QUERY += ") VALUES ?"
         return QUERY;
     }
 

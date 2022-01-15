@@ -1,88 +1,125 @@
-import { QUERY_GET, QUERY_CREATE } from "../database/aankopen.js";
-import { QUERY_GET_LIST, QUERY_CREATE_LIST } from "../database/aankopenArtikels.js";
 import pool from "../database/config.js"
+import { QUERY_INCREMENT } from "../database/counters.js";
 import errorHandler from "../logic/errorHandler.js"
+import Transaction from "../logic/Transaction.js";
 import Bulk from "../logic/util.js";
 import responseHandler from "../response/responseHandler.js"
 
 class MultipleController {
 
-    static getAankoop(id, response, next){
+    static get(queries, id, response, next){
         let resultObj= {};
 
-        console.log(QUERY_GET());
-        console.log(QUERY_GET_LIST());
-
-        // Select aankopen
-        pool.query(QUERY_GET(), [id], (err, resultAankoop) => {
+        // Select object
+        pool.query(queries.get, [id], (err, resultObject) => {
             errorHandler(err)
-            
-            console.log(resultAankoop);
 
-            if(resultAankoop.length === 0){
-                console.log("hier");
+            if(resultObject.length === 0){
                 responseHandler(err, resultObj, response, next)
                 return;
             }
-            // Check for empty object
+
+            resultObj = resultObject[0];
+            resultObj.artikels = []
             
-            resultObj = resultAankoop[0];
-
-            pool.query(QUERY_GET_LIST(), [id], (err, resultArtikels) => {
-
-                
-                console.log(resultArtikels);
-                console.log(resultArtikels[0].naam);
+            // Select artikels
+            pool.query(queries.list, [id], (err, resultArtikels) => {
                 resultObj.artikels = resultArtikels
-                console.log(resultObj);
-
                 responseHandler(err, resultObj, response, next)
             })
-
-            // Select artikels
-
         })
     }
 
-    static createAankoop(req, response, next) {
+    static create(table_name, params, queries, req, response, next) {
 
-        console.log(req.body);
-
-        const params = [req.body.bestellings_nr, req.body.datum, req.body.klant_id, req.body.ref_nr, req.body.btw_id, req.body.vervaldag, req.body.leverdatum, req.body.leverancier_id, req.body.incoterm, req.body.valuta, req.body.begintekst, req.body.eindtekst, req.body.factuuradres, req.body.leveradres, req.body.subtotaal, req.body.totaal, req.body.artikels, req.body.opmerking, req.user_id, req.bedrijf_id];
-
-        // Create aankopen
-        pool.query(QUERY_CREATE(), params, (err, resultsObject) => {
-            errorHandler(err)
+        Transaction.begin(pool, next, (connection) => {
             
-            const IDs = {
-                factuur_id: resultsObject.insertId,
-                bedrijf_id: req.bedrijf_id
-            }
-            
-            console.log(resultsObject, IDs);
+            // Create aankopen
+            connection.query(queries.create, params, (err, resultsObject) => {
 
-            const paramsList = Bulk.createAankopen(req.body.artikels, IDs)
-            
-            console.log(paramsList);
-            console.log(QUERY_CREATE_LIST());
 
-            // Create artikels list 
-            pool.query(QUERY_CREATE_LIST(), paramsList, (err, resultsList) => {
-                console.log(resultsList);
-                responseHandler(err, resultsList, response, next)
+                console.log(req.body);
+                console.log("----- een ------");
+                console.log(err);
+                console.log("----- twee ------");
+                console.log(resultsObject);
+                console.log("----- drie ------");
+                if(err || !resultsObject) return Transaction.checkForRollback(connection, err, next)
+                
+                console.log("----- vier ------");
+                const IDs = {
+                    factuur_id: resultsObject.insertId,
+                    bedrijf_id: req.bedrijf_id
+                }
+                
+                const paramsList = Bulk.createArtikels(req.body.artikels, IDs)
+                
+                // Create artikels list 
+                connection.query(queries.list, [paramsList], (err, resultsList) => {
+                    console.log("----- vijf ------");
+                    Transaction.checkForRollback(connection, err, next)
+                    console.log("----- zes ------");
+                    // Increment counter for table X
+                    connection.query(QUERY_INCREMENT(table_name), (err, responseCounter) => {
+                        console.log("----- zeven ------");
+                        Transaction.checkForRollback(connection, err, next)
+                        Transaction.commit(connection, next, () => responseHandler(err, resultsList, response, next))
+                    })
+                })
             })
         })
-
-
-
     }
 
-    static updateAankopen() {
+    static update(id, params, queries, req, response, next) {
+       
+        Transaction.begin(pool, next, (connection) => {
+
+            // Update object
+            connection.query(queries.update, params, (err, resultsObject) => {
+                console.log(req.body);
+                console.log("----- een ------");
+                console.log(err);
+                console.log("----- twee ------");
+                console.log(resultsObject);
+                console.log("----- drie ------");
+                Transaction.checkForRollback(connection, err, next)
+                console.log("----- vier ------");
+
+                // Delete artikels
+                connection.query(queries.deleteList, [id], (err, resultsDelete) => {
+                    console.log("----- vijf ------");
+
+                    Transaction.checkForRollback(connection, err, next)
+                    console.log("----- zes ------");
+
+                    const IDs = {
+                        factuur_id: id,
+                        bedrijf_id: req.bedrijf_id
+                    }
+                    
+                    const paramsList = Bulk.createArtikels(req.body.artikels, IDs)
+                    console.log(paramsList);
+                    // Create artikels
+                    connection.query(queries.list, [paramsList],(err, responseArtikels) => {
+                        console.log("----- zeven ------");
+                        
+                        Transaction.checkForRollback(connection, err, next)
+                        Transaction.commit(connection, next, () => responseHandler(err, responseArtikels, response, next))
+                    })
+                })
+            })
+        })
 
     }
 
     static deleteAankopen() {
+        Transaction.begin(pool, next, (connection) => {
 
+            // Delete artikels
+            connection.query(queries.deleteArtikels, params, (err, resultsObject) => {
+
+            })
+        })
     }
 }
 

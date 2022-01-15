@@ -1,5 +1,5 @@
 class Bulk {
-    static createAankopen(list, IDs){
+    static createArtikels(list, IDs){
         let result = []
 
         for(let i = 0; i < list.length; i++) {
