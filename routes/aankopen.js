@@ -5,7 +5,7 @@ import Pagination from "../logic/pagination.js"
 import MultipleController from "../query/multipleController.js";
 import TableStates from "../logic/constants.js";
 import { QUERY_GET, QUERY_GET_ALL, QUERY_COUNT, QUERY_CREATE, QUERY_UPDATE, QUERY_DELETE, QUERY_DELIVERED, QUERY_PAID } from "../database/aankopen.js";
-import { QUERY_CREATE_LIST, QUERY_DELETE_LIST, QUERY_GET_LIST } from "../database/aankopenArtikels.js";
+import { QUERY_CREATE_LIST, QUERY_DELETE_LIST, QUERY_GET_LIST, QUERY_SOFT_DELETE_LIST } from "../database/aankopenArtikels.js";
 
 const router = express.Router();
 
@@ -37,8 +37,6 @@ router.post("/", authenticator, (req, res, next) => {
 });
   
 router.put("/:id", authenticator, (req, res, next) => {
-    console.log("hier hahaha");
-    console.log(req.params.id);
     const paramList = [req.body.bestellings_nr, req.body.datum, req.body.klant_id, req.body.ref_nr, req.body.btw_id, req.body.vervaldag, req.body.leverdatum, req.body.leverancier_id, req.body.incoterm, req.body.valuta, req.body.begintekst, req.body.eindtekst, req.body.factuuradres, req.body.leveradres, req.body.subtotaal, req.body.totaal, req.body.isGeleverd, req.body.isBetaald, req.user_id, req.body.opmerking, req.params.id];
     const queries = {
         update: QUERY_UPDATE(),
@@ -50,7 +48,11 @@ router.put("/:id", authenticator, (req, res, next) => {
   
 router.delete("/:id", authenticator, (req, res, next) => {
     const paramList = [req.user_id, req.params.id];
-    queryHandler(QUERY_DELETE, paramList, res, next);
+    const queries = {
+        deleteList: QUERY_SOFT_DELETE_LIST(),
+        deleteObject: QUERY_DELETE(),
+    }
+    MultipleController.deleteItem(req.params.id, queries, paramList, res, next)
 });
 
 router.put("/delivered/:id", authenticator, (req, res, next) => {

@@ -14,7 +14,7 @@ class Transaction {
     }
 
     static checkForRollback(connection, err, next){
-        if(err) connection.rollback(() => next(err))
+        connection.rollback(() => next(err))
     }
 
     static commit(connection, next, responseHandler){

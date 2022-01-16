@@ -37,16 +37,8 @@ class MultipleController {
             // Create aankopen
             connection.query(queries.create, params, (err, resultsObject) => {
 
-
-                console.log(req.body);
-                console.log("----- een ------");
-                console.log(err);
-                console.log("----- twee ------");
-                console.log(resultsObject);
-                console.log("----- drie ------");
                 if(err || !resultsObject) return Transaction.checkForRollback(connection, err, next)
                 
-                console.log("----- vier ------");
                 const IDs = {
                     factuur_id: resultsObject.insertId,
                     bedrijf_id: req.bedrijf_id
@@ -56,13 +48,13 @@ class MultipleController {
                 
                 // Create artikels list 
                 connection.query(queries.list, [paramsList], (err, resultsList) => {
-                    console.log("----- vijf ------");
-                    Transaction.checkForRollback(connection, err, next)
-                    console.log("----- zes ------");
+
+                    if(err) return Transaction.checkForRollback(connection, err, next)
+
                     // Increment counter for table X
                     connection.query(QUERY_INCREMENT(table_name), (err, responseCounter) => {
-                        console.log("----- zeven ------");
-                        Transaction.checkForRollback(connection, err, next)
+
+                        if(err) return Transaction.checkForRollback(connection, err, next)
                         Transaction.commit(connection, next, () => responseHandler(err, resultsList, response, next))
                     })
                 })
@@ -76,34 +68,24 @@ class MultipleController {
 
             // Update object
             connection.query(queries.update, params, (err, resultsObject) => {
-                console.log(req.body);
-                console.log("----- een ------");
-                console.log(err);
-                console.log("----- twee ------");
-                console.log(resultsObject);
-                console.log("----- drie ------");
-                Transaction.checkForRollback(connection, err, next)
-                console.log("----- vier ------");
+
+                if(err) return Transaction.checkForRollback(connection, err, next)
 
                 // Delete artikels
                 connection.query(queries.deleteList, [id], (err, resultsDelete) => {
-                    console.log("----- vijf ------");
 
-                    Transaction.checkForRollback(connection, err, next)
-                    console.log("----- zes ------");
+                    if(err) return Transaction.checkForRollback(connection, err, next)
 
                     const IDs = {
                         factuur_id: id,
                         bedrijf_id: req.bedrijf_id
                     }
-                    
                     const paramsList = Bulk.createArtikels(req.body.artikels, IDs)
-                    console.log(paramsList);
+
                     // Create artikels
                     connection.query(queries.list, [paramsList],(err, responseArtikels) => {
-                        console.log("----- zeven ------");
-                        
-                        Transaction.checkForRollback(connection, err, next)
+
+                        if(err) return Transaction.checkForRollback(connection, err, next)
                         Transaction.commit(connection, next, () => responseHandler(err, responseArtikels, response, next))
                     })
                 })
@@ -112,12 +94,19 @@ class MultipleController {
 
     }
 
-    static deleteAankopen() {
+    static deleteItem(id, queries, params, response, next) {
         Transaction.begin(pool, next, (connection) => {
 
             // Delete artikels
-            connection.query(queries.deleteArtikels, params, (err, resultsObject) => {
+            connection.query(queries.deleteList, [id], (err, resultsList) => {
 
+                if(err) return Transaction.checkForRollback(connection, err, next)
+
+                connection.query(queries.deleteObject, params, (err, resultsObject) => {
+
+                    if(err) return Transaction.checkForRollback(connection, err, next)
+                    Transaction.commit(connection, next, () => responseHandler(err, resultsObject, response, next))
+                })
             })
         })
     }

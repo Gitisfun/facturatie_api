@@ -38,6 +38,10 @@ class BaseQueries {
         return `UPDATE ${table_name} SET isActive = 2 WHERE ${column_name} = ?`
     }
 
+    static realDeleteArtikels(table_name, column_name) {
+        return `UPDATE ${table_name} SET isActive = 0 WHERE ${column_name} = ?`
+    }
+
     static insertAll(table_name, columns){
         let QUERY = `INSERT INTO ${table_name} (`
         for(let i = 0; i < columns.length; i++){
