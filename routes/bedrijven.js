@@ -6,8 +6,7 @@ import authenticator from "../middleware/authenticator.js"
 const router = express.Router();
 
 router.get("/:id", authenticator, (req, res, next) => {
-  const paramList = [req.params.id];
-  console.log("hier");
+  const paramList = [req.bedrijf_id];
   queryHandler(QUERY_GET, paramList, res, next);
 });
 

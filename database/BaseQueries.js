@@ -39,7 +39,7 @@ class BaseQueries {
     }
 
     static realDeleteArtikels(table_name, column_name) {
-        return `UPDATE ${table_name} SET isActive = 0 WHERE ${column_name} = ?`
+        return `UPDATE ${table_name} SET isActive = 0 WHERE ${column_name} = ? AND isActive = 1`
     }
 
     static insertAll(table_name, columns){
