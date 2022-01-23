@@ -70,7 +70,7 @@ function findUser(user, response, next) {
     } else {
       const foundUser = results[0];
       if (foundUser == null) {
-        response.send({ msg: "Username not found", status: false });
+        response.send({ msg: "Username not found", msg_nl: "Gebruikersnaam niet gevonden", status: false });
       } else {
         //   response.send(foundUser)
         comparer(user, foundUser, response, next);
@@ -79,4 +79,18 @@ function findUser(user, response, next) {
   });
 }
 
-export { QUERY_GET, findUser, QUERY_GET_ALL, QUERY_CREATE, QUERY_UPDATE, QUERY_SUNDROPS, QUERY_MALIBU, QUERY_DELETE };
+function checkIfUserAlreadyExists(user, response, next){
+  pool.query(QUERY_MALIBU(), [user.gebruikersnaam], (err, results) => {
+    if (err) {
+      next(err);
+    } else {
+      if (results.length === 0) {
+        response.send({ msg: "Ok", status: true });
+      } else {
+        response.send({ msg: "User already exists", msg_nl: "Gebruikersnaam bestaat al", status: false });
+      }
+    }
+  });
+}
+
+export { QUERY_GET, findUser, checkIfUserAlreadyExists, QUERY_GET_ALL, QUERY_CREATE, QUERY_UPDATE, QUERY_SUNDROPS, QUERY_MALIBU, QUERY_DELETE };

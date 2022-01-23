@@ -1,5 +1,5 @@
 import express from "express";
-import { QUERY_GET, QUERY_GET_ALL, findUser, QUERY_CREATE, QUERY_UPDATE, QUERY_SUNDROPS, QUERY_DELETE } from "../database/gebruikers.js";
+import { QUERY_GET, QUERY_GET_ALL, findUser, checkIfUserAlreadyExists, QUERY_CREATE, QUERY_UPDATE, QUERY_SUNDROPS, QUERY_DELETE } from "../database/gebruikers.js";
 import queryHandler from "../query/queryHandler.js";
 import hasher from "../logic/hasher.js";
 import authenticator from "../middleware/authenticator.js"
@@ -16,8 +16,13 @@ router.get("/:id", authenticator, (req, res, next) => {
   queryHandler(QUERY_GET, paramList, res, next);
 });
 
+router.post("/check", authenticator, (req, res, next) => {
+  console.log("hier ja");
+  checkIfUserAlreadyExists(req.body, res, next)
+});
+
 router.post("/", authenticator, (req, res, next) => {
-  const paramList = [req.body.gebruikersnaam, req.body.voornaam, req.body.achternaam, req.body.rol, req.body.bedrijf_id];
+  const paramList = [req.body.gebruikersnaam, req.body.voornaam, req.body.achternaam, req.body.rol, req.bedrijf_id];
   hasher(req.body, QUERY_CREATE, paramList, queryHandler, res, next);
 });
 
