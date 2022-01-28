@@ -19,7 +19,7 @@ class Transaction {
 
     static commit(connection, next, responseHandler){
         connection.commit(err => {
-            this.checkForRollback(connection, err, next)
+            if(err) this.checkForRollback(connection, err, next)
             responseHandler()
         })
 

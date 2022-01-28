@@ -20,6 +20,7 @@ import tekstRoute from "./routes/tekst.js"
 import bedrijvenRoute from "./routes/bedrijven.js"
 import countersRoute from "./routes/counters.js"
 import testRoute from "./routes/test.js"
+import statisticsRoute from "./routes/statistics.js"
 
 const app = Express();
 const server = http.createServer(app);
@@ -103,6 +104,7 @@ app.use("/api/creditnotas/", creditnotasRoute);
 app.use("/api/bedrijven/", bedrijvenRoute);
 app.use("/api/counters/", countersRoute);
 app.use("/api/test/", testRoute)
+app.use("/api/statistics", statisticsRoute)
 
 app.use((req, res, next) => {
   next(ApiError.notFound("Route not found"));
