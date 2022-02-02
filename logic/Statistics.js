@@ -8,7 +8,8 @@ class Statistics {
 
     static generic_per_day(table_name, mode, type, req, res, next) {
         const paramList = ParamsBuilder.range(req)
-        const query = StatisticsQuery.QUERY_PER_DAY(req.body.list, table_name, mode, type)
+        const query = StatisticsQuery.QUERY_PER_DAY(req.body, table_name, mode, type)
+        console.log(query);
         queryHandler(() => { return query }, paramList, res, next);
     }
 
@@ -90,19 +91,19 @@ class Statistics {
     }
 
 
-    static aankopen_period_total(req, res, next) {
+    static verkopen_period_total(req, res, next) {
         this.generic_period(TableNames.VERKOPEN, StatisticsStates.TOTAL, StatisticsStates.ALL, req, res, next)
     }
 
-    static aankopen_period_total_betaald(req, res, next) {
+    static verkopen_period_total_betaald(req, res, next) {
         this.generic_period(TableNames.VERKOPEN, StatisticsStates.TOTAL, StatisticsStates.BETAALD, req, res, next)
     }
 
-    static aankopen_period_sum(req, res, next) {
+    static verkopen_period_sum(req, res, next) {
         this.generic_period(TableNames.VERKOPEN, StatisticsStates.SUM, StatisticsStates.ALL, req, res, next)
     }
 
-    static aankopen_period_sum_betaald(req, res, next) {
+    static verkopen_period_sum_betaald(req, res, next) {
         this.generic_period(TableNames.VERKOPEN, StatisticsStates.SUM, StatisticsStates.BETAALD, req, res, next)
     }
 
@@ -126,19 +127,19 @@ class Statistics {
     }
 
 
-    static aankopen_period_total(req, res, next) {
+    static creditnotas_period_total(req, res, next) {
         this.generic_period(TableNames.CREDITNOTAS, StatisticsStates.TOTAL, StatisticsStates.ALL, req, res, next)
     }
 
-    static aankopen_period_total_betaald(req, res, next) {
+    static creditnotas_period_total_betaald(req, res, next) {
         this.generic_period(TableNames.CREDITNOTAS, StatisticsStates.TOTAL, StatisticsStates.BETAALD, req, res, next)
     }
 
-    static aankopen_period_sum(req, res, next) {
+    static creditnotas_period_sum(req, res, next) {
         this.generic_period(TableNames.CREDITNOTAS, StatisticsStates.SUM, StatisticsStates.ALL, req, res, next)
     }
 
-    static aankopen_period_sum_betaald(req, res, next) {
+    static creditnotas_period_sum_betaald(req, res, next) {
         this.generic_period(TableNames.CREDITNOTAS, StatisticsStates.SUM, StatisticsStates.BETAALD, req, res, next)
     }
 

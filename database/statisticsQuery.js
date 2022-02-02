@@ -21,10 +21,6 @@ class StatisticsQuery {
     static QUERY_PERIOD(table_name, mode, type){
         const SELECT = StatisticsStates.getSelectQuery(mode)
         const WHERE = StatisticsStates.getWhereQuery(type)
-        console.log(type);
-        console.log(mode);
-        console.log(SELECT);
-        console.log(WHERE);
         return `SELECT ${SELECT} "totaal" FROM ${table_name} WHERE bedrijfs_id = ? AND isActive = 1 AND datum BETWEEN ? AND ? ${WHERE}`
     }
     

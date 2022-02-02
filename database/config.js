@@ -13,13 +13,14 @@ import mysql from "mysql"
 //     timezone: process.env.TIMEZONE
 //   };
 
+// TODO: dit aanpassen naar juist credentials
 const config = {
   host: "107.6.166.26",
   user: "comagexi_finalwork",
   password: "dqTjdEiT2867xmm",
   database: "comagexi_company",
   waitForConnections: true,
-  connectionLimit: 10,
+  connectionLimit: 25,
   queueLimit: 0,
   supportBigNumbers: true,
   bigNumberStrings: true,
