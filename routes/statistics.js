@@ -56,6 +56,33 @@ router.post("/aankopen/period/sum/betaald", authenticator, (req, res, next) => {
     Statistics.aankopen_period_sum_betaald(req, res, next)
 });
 
+
+router.post("/aankopen/months/total", authenticator, (req, res, next) => {
+    Statistics.aankopen_months_total(req, res, next)
+});
+
+router.post("/aankopen/months/total/geleverd", authenticator, (req, res, next) => {
+    Statistics.aankopen_months_total_geleverd(req, res, next)
+});
+
+router.post("/aankopen/months/total/betaald", authenticator, (req, res, next) => {
+    Statistics.aankopen_months_total_betaald(req, res, next)
+});
+
+router.post("/aankopen/months/sum", authenticator, (req, res, next) => {
+    Statistics.aankopen_months_sum(req, res, next)
+});
+
+router.post("/aankopen/months/sum/geleverd", authenticator, (req, res, next) => {
+    Statistics.aankopen_months_sum_geleverd(req, res, next)
+});
+
+router.post("/aankopen/months/sum/betaald", authenticator, (req, res, next) => {
+    Statistics.aankopen_months_sum_betaald(req, res, next)
+});
+
+
+
 // VERKOPEN
 
 router.post("/verkopen/total", authenticator, (req, res, next) => {
@@ -92,6 +119,24 @@ router.post("/verkopen/period/sum/betaald", authenticator, (req, res, next) => {
 });
 
 
+router.post("/verkopen/months/total", authenticator, (req, res, next) => {
+    Statistics.verkopen_months_total(req, res, next)
+});
+
+router.post("/verkopen/months/total/betaald", authenticator, (req, res, next) => {
+    Statistics.verkopen_months_total_betaald(req, res, next)
+});
+
+router.post("/verkopen/months/sum", authenticator, (req, res, next) => {
+    Statistics.verkopen_months_sum(req, res, next)
+});
+
+router.post("/verkopen/months/sum/betaald", authenticator, (req, res, next) => {
+    Statistics.verkopen_months_sum_betaald(req, res, next)
+});
+
+
+
 // CREDITNOTAS
 
 router.post("/creditnotas/total", authenticator, (req, res, next) => {
@@ -126,5 +171,24 @@ router.post("/creditnotas/period/sum", authenticator, (req, res, next) => {
 router.post("/creditnotas/period/sum/betaald", authenticator, (req, res, next) => {
     Statistics.creditnotas_period_sum_betaald(req, res, next)
 });
+
+
+router.post("/creditnotas/months/total", authenticator, (req, res, next) => {
+    Statistics.creditnotas_months_total(req, res, next)
+});
+
+router.post("/creditnotas/months/total/betaald", authenticator, (req, res, next) => {
+    Statistics.creditnotas_months_total_betaald(req, res, next)
+});
+
+router.post("/creditnotas/months/sum", authenticator, (req, res, next) => {
+    Statistics.creditnotas_months_sum(req, res, next)
+});
+
+router.post("/creditnotas/months/sum/betaald", authenticator, (req, res, next) => {
+    Statistics.creditnotas_months_sum_betaald(req, res, next)
+});
+
+
 
 export default router;
