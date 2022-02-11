@@ -11,7 +11,7 @@ router.get("/", authenticator, (req, res, next) => {
 });
 
 router.put("/:id", authenticator, (req, res, next) => {
-  const paramList = [req.body.aankopen, req.body.verkopen, req.body.creditnota, req.bedrijf_id];
+  const paramList = [req.body.aankopen, req.body.verkopen, req.body.creditnotas, req.body.id];
   queryHandler(QUERY_UPDATE, paramList, res, next);
 });
 

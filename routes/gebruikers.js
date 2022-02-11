@@ -17,7 +17,6 @@ router.get("/:id", authenticator, (req, res, next) => {
 });
 
 router.post("/check", authenticator, (req, res, next) => {
-  console.log("hier ja");
   checkIfUserAlreadyExists(req.body, res, next)
 });
 
