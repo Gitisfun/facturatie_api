@@ -21,7 +21,7 @@ import tekstRoute from "./routes/tekst.js"
 import bedrijvenRoute from "./routes/bedrijven.js"
 import countersRoute from "./routes/counters.js"
 import statisticsRoute from "./routes/statistics.js"
-console.log(process.env.CO_ORIGIN);
+
 const app = Express();
 const server = http.createServer(app);
 const port = process.env.CO_PORT || 5000;
