@@ -19,6 +19,16 @@ class ParamsBuilder{
         return paramList
     }
 
+    static rangeStartAndEnd(req){
+        let paramList = []
+        for(let i = 0; i < req.body.length; i++){
+            paramList.push(req.bedrijf_id)
+            paramList.push(req.body[i].start_date)
+            paramList.push(req.body[i].end_date)
+        } 
+        return paramList
+    }
+
 }
 
 

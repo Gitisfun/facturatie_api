@@ -9,6 +9,8 @@ class Statistics {
     static generic_per_day(table_name, mode, type, req, res, next) {
         const paramList = ParamsBuilder.range(req)
         const query = StatisticsQuery.QUERY_PER_DAY(req.body, table_name, mode, type)
+        //const paramList = ParamsBuilder.rangeStartAndEnd(req)
+        //const query = StatisticsQuery.QUERY_PER_DAY_RANGE(req.body, table_name, mode, type)
         queryHandler(() => { return query }, paramList, res, next);
     }
 
