@@ -87,7 +87,6 @@ class Pagination {
   static queryHandler(queryOne, queryParams, paramListOne, queryTwo, paramListTwo, response, next){
     pool.query(queryOne(queryParams.sortField, queryParams.sortOrder), paramListOne, (err, results) => {
       if(err){
-        //console.log(err); // TODO: remove console log here
         next(err)
       }
       else{

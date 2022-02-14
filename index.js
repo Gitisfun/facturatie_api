@@ -4,7 +4,6 @@ import * as socketio from "socket.io";
 import cors from "cors";
 import ApiError from "./errors/ApiError.js";
 import errorHandler from "./errors/ErrorHandler.js";
-import chalk from "chalk" // TODO: remove chalk
 
 // Routes
 import aankopenRoute from "./routes/aankopen.js"
@@ -19,7 +18,6 @@ import artikelenRoute from "./routes/artikels.js"
 import tekstRoute from "./routes/tekst.js"
 import bedrijvenRoute from "./routes/bedrijven.js"
 import countersRoute from "./routes/counters.js"
-import testRoute from "./routes/test.js"
 import statisticsRoute from "./routes/statistics.js"
 
 const app = Express();
@@ -39,13 +37,6 @@ app.use(Express.urlencoded({ extended: true }));
 
 io.on("connection", (socket) => {
 
-  console.log(chalk.green("New socket connected"));
-
-  socket.on("clicked", () => {
-    console.log("Clicked the button");
-    socket.broadcast.emit("clicked", "Your response from the server is here!!")
-  })
-  
   socket.on("aankopen", () => {
     socket.broadcast.emit("aankopen", "Your response from the server is here!!")
   })
@@ -81,10 +72,6 @@ io.on("connection", (socket) => {
     socket.emit("instellingen", "Your response from the server is here!!")
     socket.broadcast.emit("instellingen", "Your response from the server is here!!")
   })
-
-  socket.on("disconnect", () => {
-    console.log(chalk.red("A socket has disconnected..."));
-  });
 });
 
 app.get("/", (req, res) => {
@@ -103,7 +90,6 @@ app.use("/api/verkopen/", verkopenRoute);
 app.use("/api/creditnotas/", creditnotasRoute);
 app.use("/api/bedrijven/", bedrijvenRoute);
 app.use("/api/counters/", countersRoute);
-app.use("/api/test/", testRoute)
 app.use("/api/statistics", statisticsRoute)
 
 app.use((req, res, next) => {

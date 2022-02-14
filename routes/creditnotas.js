@@ -32,7 +32,6 @@ router.post("/", authenticator, (req, res, next) => {
         create: QUERY_CREATE(),
         list: QUERY_CREATE_LIST(),
     }
-    console.log(params);
     MultipleController.create(TableStates.CREDITNOTAS, params, queries, req, res, next)
 });
   

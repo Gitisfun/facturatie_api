@@ -10,7 +10,6 @@ class ParamsBuilder{
     }
 
     static rangeMonths(req){
-        console.log(req.body.year);
         let paramList = []
         for(let i = 0; i < 12; i++){
             paramList.push(req.bedrijf_id)

@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import responseHandler from "../response/responseHandler.js";
 
 export default function comparer(user, foundUser, response, next) {
-  const ONE_WEEK = 60 * 60 * 24 * 7;
+  const ONE_WEEK = 60 * 60 * 24 * 30;
   // TODO: Set token time to a month
   //const TEST_INTERVAL = 30;
   let msg = {};
