@@ -24,7 +24,7 @@ import statisticsRoute from "./routes/statistics.js"
 
 const app = Express();
 const server = http.createServer(app);
-const port = process.env.CO_PORT || 5000;
+const port = process.env.CO_PORT || 5001;
 const origin = process.env.CO_ORIGIN || "http://localhost:8080";
 const io = new socketio.Server(server, {
   cors: {
