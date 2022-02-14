@@ -1,9 +1,11 @@
+import 'dotenv/config'
 import Express from "express";
 import http from "http";
 import * as socketio from "socket.io";
 import cors from "cors";
 import ApiError from "./errors/ApiError.js";
 import errorHandler from "./errors/ErrorHandler.js";
+
 
 // Routes
 import aankopenRoute from "./routes/aankopen.js"
@@ -19,17 +21,16 @@ import tekstRoute from "./routes/tekst.js"
 import bedrijvenRoute from "./routes/bedrijven.js"
 import countersRoute from "./routes/counters.js"
 import statisticsRoute from "./routes/statistics.js"
-
+console.log(process.env.CO_ORIGIN);
 const app = Express();
 const server = http.createServer(app);
-const port = process.env.PORT || 5000;
-const origin = process.env.ORIGIN || "http://localhost:8080";
+const port = process.env.CO_PORT || 5000;
+const origin = process.env.CO_ORIGIN || "http://localhost:8080";
 const io = new socketio.Server(server, {
   cors: {
-    origin: origin,
+    origin: `${origin}`
   },
 });
-
 
 app.use(cors());
 app.use(Express.json());
