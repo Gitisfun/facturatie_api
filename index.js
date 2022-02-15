@@ -8,6 +8,7 @@ import errorHandler from "./errors/ErrorHandler.js";
 
 
 // Routes
+
 import aankopenRoute from "./routes/aankopen.js"
 import verkopenRoute from "./routes/verkopen.js"
 import creditnotasRoute from "./routes/creditnotas.js"
