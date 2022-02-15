@@ -1,13 +1,14 @@
-import 'dotenv/config'
+//import 'dotenv/config'
 import Express from "express";
 import http from "http";
-import * as socketio from "socket.io";
+/*import * as socketio from "socket.io";
 import cors from "cors";
 import ApiError from "./errors/ApiError.js";
 import errorHandler from "./errors/ErrorHandler.js";
-
+*/
 
 // Routes
+/*
 import aankopenRoute from "./routes/aankopen.js"
 import verkopenRoute from "./routes/verkopen.js"
 import creditnotasRoute from "./routes/creditnotas.js"
@@ -21,21 +22,21 @@ import tekstRoute from "./routes/tekst.js"
 import bedrijvenRoute from "./routes/bedrijven.js"
 import countersRoute from "./routes/counters.js"
 import statisticsRoute from "./routes/statistics.js"
-
+*/
 const app = Express();
 const server = http.createServer(app);
-const port = process.env.CO_PORT || 5001;
-const origin = process.env.CO_ORIGIN || "http://localhost:8080";
+const port = process.env.CO_PORT || 5000;
+/*const origin = process.env.CO_ORIGIN || "http://localhost:8080";
 const io = new socketio.Server(server, {
   cors: {
     origin: `${origin}`
   },
-});
+});*/
 
-app.use(cors());
+//app.use(cors());
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
-
+/*
 io.on("connection", (socket) => {
 
   socket.on("aankopen", () => {
@@ -74,11 +75,11 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("instellingen", "Your response from the server is here!!")
   })
 });
-
+*/
 app.get("/", (req, res) => {
   res.send("Welcome to the API!!!");
 });
-
+/*
 app.use("/api/gebruikers/", gebruikersRoute);
 app.use("/api/btw/", btwRoute);
 app.use("/api/betalingstermijnen/", betalingstermijnenRoute);
@@ -98,5 +99,5 @@ app.use((req, res, next) => {
 });
 
 app.use(errorHandler);
-
+*/
 server.listen(port, () => console.log(`Server is running on port ${port}`));
